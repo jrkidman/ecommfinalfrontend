@@ -13,7 +13,7 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
     return (
         <div>
             {/* text input */}
-            <label>Username:</label>
+            <label>Email:</label>
             <input
                 type="text"
                 value={username}
@@ -37,6 +37,20 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             </input>
             <br></br>
             <br></br>
+
+            {/* text input */}
+            <label>Confirm Password:</label>
+            <input
+                type="password"
+                value={password}
+                onChange={(event) => {
+                    const newPassword = event.target.value;
+                    setPassword(newPassword);
+                }}>
+            </input>
+            <br></br>
+            <br></br>
+
 
             <button
                 id="signup"

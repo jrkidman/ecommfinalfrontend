@@ -11,7 +11,7 @@ const LoginPage = ({ setIsAuthLoading }) => {
     return (
         <div>
             {/* text input */}
-            <label>Username:</label>
+            <label>Email:</label>
             <input
                 type="text"
                 value={username}
@@ -35,6 +35,7 @@ const LoginPage = ({ setIsAuthLoading }) => {
             </input>
             <br></br>
             <br></br>
+
 
             <button
                 id="login"
