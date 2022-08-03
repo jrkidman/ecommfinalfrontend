@@ -55,6 +55,7 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
           setIsAuthLoading(true);
           const isUserRegistered = await registerUser(username, password);
 
+
           if (isUserRegistered) {
             const isUserLoggedIn = await loginUser(username, password);
             if (isUserLoggedIn) {
