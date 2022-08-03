@@ -10,6 +10,10 @@ import ProductPage from './Pages/ProductPage';
 
 function App() {
   const [isAuthLoading, setIsAuthLoading] = useState(false)
+  const [currentCart, setCurrentCart] = useState([]);
+  const [orderHistory, setOrderHistory] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+
 
   return (
     <div className="App">
