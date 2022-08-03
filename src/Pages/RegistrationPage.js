@@ -29,7 +29,7 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             <label>Password:</label>
             <input
                 type="password"
-                value={password}
+                // value={password}
                 onChange={(event) => {
                     const newPassword = event.target.value;
                     setPassword(newPassword);
@@ -42,7 +42,7 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             <label>Confirm Password:</label>
             <input
                 type="password"
-                value={password}
+                // value={password}
                 onChange={(event) => {
                     const newPassword = event.target.value;
                     setPassword(newPassword);
