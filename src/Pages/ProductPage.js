@@ -91,7 +91,7 @@ const ProductPage = ({
       ></input>
       <div>
         {products.map((product) => {
-          return <DisplayProduct product={product} key={product.id} />;
+          return <DisplayProduct product={product} key={product.productId} />;
         })}
       </div>
     </div>
@@ -101,13 +101,12 @@ const ProductPage = ({
 const DisplayProduct = ({ product }) => {
   return (
     <div className="single-product">
-      <p>
-        <span>
-          <strong> Image: </strong>
-          <br />
-        </span>
-        {product.image}
-      </p>
+      {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
+      <img
+        id="image"
+        src="https://i.imgur.com/3N7J0Zn.jpg"
+        title="source: imgur.com"
+      />
       <p>
         <span>
           <strong> Title: </strong>
