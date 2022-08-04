@@ -1,11 +1,13 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import HomePage from "./Pages/HomePage";
-import NavBar from "./Components/NavBar";
-import RegistrationPage from "./Pages/RegistrationPage";
-import LoginPage from "./Pages/LoginPage";
-import ProductPage from "./Pages/ProductPage";
+import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import HomePage from './Pages/HomePage';
+import NavBar from './Components/NavBar';
+import RegistrationPage from './Pages/RegistrationPage';
+import LoginPage from './Pages/LoginPage';
+import ProductPage from './Pages/ProductPage';
+import Cart from './Pages/Cart';
+import Admin from './Pages/Admin';
 import { useEffect } from "react";
 
 const urlEndpoint = "http://localhost:4000";
@@ -42,6 +44,9 @@ function App() {
       <header className="App-header">
         <Routes>
           <Route path="/" element={<NavBar />}>
+
+            <Route index element={<HomePage />} />
+
             <Route
               path="login"
               element={
@@ -57,8 +62,6 @@ function App() {
                 />
               }
             />
-
-            <Route index element={<HomePage />} />
 
             <Route
               path="registration"
@@ -93,8 +96,28 @@ function App() {
                   setPage={setPage}
                 />
               }
-            />
+            >
+
+              {/* nested route for all products displaying */}
+              <Route path="all" element={<ProductPage />} />
+
+              {/* nested route for single product */}
+              <Route path="/products/:productId" element={<ProductPage />} />
+
+            </Route>
+
+            <Route path="admin" element={<Admin
+              isAdmin={isAdmin}
+              setIsAdmin={setIsAdmin}
+            />} />
+
+            <Route path="cart" element={<Cart
+              currentCart={currentCart}
+              setCurrentCart={setCurrentCart}
+            />} />
+
           </Route>
+
         </Routes>
       </header>
     </div>
