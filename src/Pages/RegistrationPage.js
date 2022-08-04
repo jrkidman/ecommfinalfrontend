@@ -5,8 +5,8 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 
 const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
     return (
@@ -19,8 +19,8 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
                 onChange={(event) => {
                     const newEmail = event.target.value;
                     setEmail(newEmail);
-                }}>
-            </input>
+                }}
+            ></input>
             <br></br>
             <br></br>
 
@@ -38,16 +38,15 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
 
             {/* text input */}
             {/* <label>Confirm Password:</label>
-            <input
-                type="password"
-                // value={password}
-                onChange={(event) => {
-                    const newPassword = event.target.value;
-                    setPassword(newPassword);
-                }}>
-            </input>
+      <input
+        type="password"
+        onChange={(event) => {
+          const newPassword = event.target.value;
+          setPassword(newPassword);
+        }}
+      ></input> */}
             <br></br>
-            <br></br> */}
+            <br></br>
 
             <button
                 id="signup"
@@ -55,19 +54,20 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
                 onClick={async () => {
                     setIsAuthLoading(true);
                     const isUserRegistered = await registerUser(email, password);
+
                     if (isUserRegistered) {
-                        const isUserLoggedIn = await loginUser(email, password)
+                        const isUserLoggedIn = await loginUser(email, password);
                         if (isUserLoggedIn) {
-                            setIsAuthLoading(false)
-                            navigate('/');
+                            setIsAuthLoading(false);
+                            navigate("/");
                         }
                     }
-                }}>
+                }}
+            >
                 Register
             </button>
-
         </div>
-    )
-}
+    );
+};
 
-export default RegistrationPage
+export default RegistrationPage;
