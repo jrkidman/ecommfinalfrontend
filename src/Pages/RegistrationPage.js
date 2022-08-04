@@ -1,14 +1,13 @@
-import React from 'react'
-import { registerUser } from '../Auth'
-import { loginUser } from '../Auth'
-import { useNavigate } from 'react-router'
-import { useState } from 'react'
+import React from "react";
+import { registerUser } from "../Auth";
+import { loginUser } from "../Auth";
+import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
-
 
     return (
         <div>
@@ -29,12 +28,11 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             <label>Password:</label>
             <input
                 type="password"
-                // value={password}
                 onChange={(event) => {
                     const newPassword = event.target.value;
                     setPassword(newPassword);
-                }}>
-            </input>
+                }}
+            ></input>
             <br></br>
             <br></br>
 
@@ -50,7 +48,6 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             </input>
             <br></br>
             <br></br> */}
-
 
             <button
                 id="signup"
@@ -68,7 +65,6 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
                 }}>
                 Register
             </button>
-
 
         </div>
     )
