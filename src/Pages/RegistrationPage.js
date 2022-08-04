@@ -5,69 +5,69 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 
 const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-  return (
-    <div>
-      {/* text input */}
-      <label>Email:</label>
-      <input
-        type="text"
-        value={username}
-        onChange={(event) => {
-          const newUsername = event.target.value;
-          setUsername(newUsername);
-        }}
-      ></input>
-      <br></br>
-      <br></br>
+    return (
+        <div>
+            {/* text input */}
+            <label>Email:</label>
+            <input
+                type="text"
+                value={email}
+                onChange={(event) => {
+                    const newEmail = event.target.value;
+                    setEmail(newEmail);
+                }}
+            ></input>
+            <br></br>
+            <br></br>
 
-      {/* text input */}
-      <label>Password:</label>
+            {/* text input */}
+            <label>Password:</label>
+            <input
+                type="password"
+                onChange={(event) => {
+                    const newPassword = event.target.value;
+                    setPassword(newPassword);
+                }}
+            ></input>
+            <br></br>
+            <br></br>
+
+            {/* text input */}
+            {/* <label>Confirm Password:</label>
       <input
         type="password"
         onChange={(event) => {
           const newPassword = event.target.value;
           setPassword(newPassword);
         }}
-      ></input>
-      <br></br>
-      <br></br>
+      ></input> */}
+            <br></br>
+            <br></br>
 
-      {/* text input */}
-      <label>Confirm Password:</label>
-      <input
-        type="password"
-        onChange={(event) => {
-          const newPassword = event.target.value;
-          setPassword(newPassword);
-        }}
-      ></input>
-      <br></br>
-      <br></br>
+            <button
+                id="signup"
+                type="submit"
+                onClick={async () => {
+                    setIsAuthLoading(true);
+                    const isUserRegistered = await registerUser(email, password);
 
-      <button
-        id="signup"
-        type="submit"
-        onClick={async () => {
-          setIsAuthLoading(true);
-          const isUserRegistered = await registerUser(username, password);
-
-          if (isUserRegistered) {
-            const isUserLoggedIn = await loginUser(username, password);
-            if (isUserLoggedIn) {
-              setIsAuthLoading(false);
-              navigate("/");
-            }
-          }
-        }}
-      >
-        Register
-      </button>
-    </div>
-  );
+                    if (isUserRegistered) {
+                        const isUserLoggedIn = await loginUser(email, password);
+                        if (isUserLoggedIn) {
+                            setIsAuthLoading(false);
+                            navigate("/");
+                        }
+                    }
+                }}
+            >
+                Register
+            </button>
+        </div>
+    );
 };
 
 export default RegistrationPage;
