@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import { useState } from 'react'
 
 const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
 
@@ -16,10 +16,10 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             <label>Email:</label>
             <input
                 type="text"
-                value={username}
+                value={email}
                 onChange={(event) => {
-                    const newUsername = event.target.value;
-                    setUsername(newUsername);
+                    const newEmail = event.target.value;
+                    setEmail(newEmail);
                 }}>
             </input>
             <br></br>
@@ -39,7 +39,7 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
             <br></br>
 
             {/* text input */}
-            <label>Confirm Password:</label>
+            {/* <label>Confirm Password:</label>
             <input
                 type="password"
                 // value={password}
@@ -49,7 +49,7 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
                 }}>
             </input>
             <br></br>
-            <br></br>
+            <br></br> */}
 
 
             <button
@@ -57,10 +57,9 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
                 type="submit"
                 onClick={async () => {
                     setIsAuthLoading(true);
-                    const isUserRegistered = await registerUser(username, password);
-
+                    const isUserRegistered = await registerUser(email, password);
                     if (isUserRegistered) {
-                        const isUserLoggedIn = await loginUser(username, password)
+                        const isUserLoggedIn = await loginUser(email, password)
                         if (isUserLoggedIn) {
                             setIsAuthLoading(false)
                             navigate('/');

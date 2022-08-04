@@ -6,6 +6,7 @@ import NavBar from './Components/NavBar';
 import RegistrationPage from './Pages/RegistrationPage';
 import LoginPage from './Pages/LoginPage';
 import ProductPage from './Pages/ProductPage';
+import Cart from './Pages/Cart';
 
 
 function App() {
@@ -37,7 +38,28 @@ function App() {
           <Route path="products" element={<ProductPage
             isAuthLoading={isAuthLoading}
             setIsAuthLoading={setIsAuthLoading}
+          />} >
+
+            {/* nested route for all products displaying */}
+            <Route path="/all" element={<ProductPage
+            />} />
+
+            {/* nested route for single product */}
+            <Route path="/product:id" element={<ProductPage
+            />} />
+
+          </Route>
+
+          <Route path="admin" element={<Admin
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
           />} />
+
+          <Route path="cart" element={<Cart
+            currentCart={currentCart}
+            setCurrentCart={setCurrentCart}
+          />} />
+
 
         </Routes>
       </header>

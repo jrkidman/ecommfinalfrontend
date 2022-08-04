@@ -1,14 +1,14 @@
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
 
-export const registerUser = async (username, password) => {
-    const response = await fetch(`${urlEndpoint}/auth/register-user`, {
+export const registerUser = async (email, password) => {
+    const response = await fetch(`${urlEndpoint}/auth/registration`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username,
+            email,
             password
         })
     })
@@ -16,14 +16,14 @@ export const registerUser = async (username, password) => {
     return responseJSON.success;
 }
 
-export const loginUser = async (username, password) => {
-    const response = await fetch(`${urlEndpoint}/auth/login-user`, {
+export const loginUser = async (email, password) => {
+    const response = await fetch(`${urlEndpoint}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username,
+            email,
             password
         })
     })
