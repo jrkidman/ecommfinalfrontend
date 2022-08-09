@@ -1,29 +1,21 @@
-import React from "react";
+import React, { Children } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { getUserToken } from "../Auth";
-import { logoutUser } from "../Auth";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useAuth } from "../Hooks/Auth";
 
 const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
-  const [userToken, setUserToken] = useState("");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const localUserToken = getUserToken();
-    setUserToken(localUserToken);
-  }, [isAuthLoading]);
+  const { user, logout, email } = useAuth();
+  // console.log({ email });
 
   return (
     <div id="navdiv">
       <nav className="navbar">
-        {/* <h3>NavBar</h3> */}
         <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          {!userToken && (
+          {/* IF the user does not exist, or no user is logged in, display these links in the navbar */}
+          {!user && (
             <>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
               <li>
                 <Link to="/login">Login</Link>
               </li>
@@ -33,30 +25,38 @@ const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
               <li>
                 <Link to="/products">Products</Link>
               </li>
-              <li>
-                <Link to="/cart">Cart</Link>
-              </li>
             </>
           )}
         </ul>
-        {userToken && (
-          <>
+        {/* IF the user exists, and is logged in... display these links in the navbar. */}
+        {user && (
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+              <Link to="/products">Products</Link>
+            </li>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <br />
             <span>
-              <strong>You Are Logged In</strong>
+              {/* How do we access the user.email key value to display the logged in user?? */}
+              <strong>Currently Logged In As: {email}</strong>
             </span>
             <button
+              // On click, button will run logout function pulled from Auth.js with useAuth context hook
               onClick={async () => {
-                setIsAuthLoading(true);
-                const logoutSuccess = await logoutUser();
-                if (logoutSuccess) {
-                  setIsAuthLoading(false);
-                  navigate("/");
-                }
+                await logout();
               }}
             >
               Logout
             </button>
-          </>
+          </ul>
         )}
       </nav>
       <Outlet />

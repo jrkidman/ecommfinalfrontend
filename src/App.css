@@ -51,8 +51,21 @@
   width: 100%;
 }
 
+.navbar ul {
+  background-color: grey;
+}
 .navbar li {
   display: inline-block;
   padding: 10px;
   margin: 10px;
+}
+
+/* Products Page CSS */
+.products-page {
+  margin-top: 100px; /* temp fix */
+}
+
+#image {
+  height: 350px;
+  width: 350px;
 }

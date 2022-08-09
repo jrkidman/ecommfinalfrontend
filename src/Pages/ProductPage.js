@@ -91,28 +91,25 @@ const ProductPage = ({
       ></input>
       <div>
         {products.map((product) => {
-          return <DisplayProduct product={product} key={product.id} />;
+          return <DisplayProduct product={product} key={product.productId} />;
         })}
       </div>
     </div>
   );
 };
 
-const DisplayProduct = ({ product }) => {
+const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
   return (
     <div className="single-product">
-      <p>
-        <span>
-          <strong> Image: </strong>
-          <br />
-        </span>
-        <a href="https://imgur.com/3N7J0Zn">
-          <img
-            src="https://i.imgur.com/3N7J0Zn.jpg"
-            title="source: imgur.com"
-          />
-        </a>
-      </p>
+
+      {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
+      <img
+        id="image"
+        alt="some noms"
+        src={product.image}
+        title="source: imgur.com"
+      />
+
       <p>
         <span>
           <strong> Title: </strong>
@@ -144,6 +141,17 @@ const DisplayProduct = ({ product }) => {
         </span>
         {product.productId}
       </p>
+      <button
+        id="addToCart"
+        type="submit"
+        onClick={async () => {
+          const updatedCart = [];
+          updatedCart.push(product);
+          setCurrentCart(updatedCart);
+        }}
+      >
+        Add to Cart
+      </button>
       <hr></hr>
     </div>
   );
