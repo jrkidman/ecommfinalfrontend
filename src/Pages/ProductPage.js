@@ -106,7 +106,12 @@ const DisplayProduct = ({ product }) => {
           <strong> Image: </strong>
           <br />
         </span>
-        {product.image}
+        <a href="https://imgur.com/3N7J0Zn">
+          <img
+            src="https://i.imgur.com/3N7J0Zn.jpg"
+            title="source: imgur.com"
+          />
+        </a>
       </p>
       <p>
         <span>
