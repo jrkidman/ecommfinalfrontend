@@ -79,6 +79,8 @@ function App() {
               element={
                 <ProductPage
                   products={serverJSON.message}
+                  currentCart={currentCart}
+                  setCurrentCart={setCurrentCart}
                   isAuthLoading={isAuthLoading}
                   setIsAuthLoading={setIsAuthLoading}
                   sortField={sortField}

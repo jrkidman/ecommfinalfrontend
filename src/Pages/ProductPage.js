@@ -98,13 +98,14 @@ const ProductPage = ({
   );
 };
 
-const DisplayProduct = ({ product }) => {
+const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
   return (
     <div className="single-product">
       {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
       <img
         id="image"
-        src="https://i.imgur.com/3N7J0Zn.jpg"
+        alt="some noms"
+        src={product.image}
         title="source: imgur.com"
       />
       <p>
@@ -138,6 +139,17 @@ const DisplayProduct = ({ product }) => {
         </span>
         {product.productId}
       </p>
+      <button
+        id="addToCart"
+        type="submit"
+        onClick={async () => {
+          const updatedCart = [];
+          updatedCart.push(product);
+          setCurrentCart(updatedCart);
+        }}
+      >
+        Add to Cart
+      </button>
       <hr></hr>
     </div>
   );
