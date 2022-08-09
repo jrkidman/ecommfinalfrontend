@@ -3,7 +3,9 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/Auth";
 
 const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
-  const { user, logout } = useAuth();
+  const { user, logout, email } = useAuth();
+  // console.log({ email });
+
   return (
     <div id="navdiv">
       <nav className="navbar">
@@ -44,7 +46,7 @@ const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
             <br />
             <span>
               {/* How do we access the user.email key value to display the logged in user?? */}
-              <strong>Currently Logged In As: {user}</strong>
+              <strong>Currently Logged In As: {email}</strong>
             </span>
             <button
               // On click, button will run logout function pulled from Auth.js with useAuth context hook
