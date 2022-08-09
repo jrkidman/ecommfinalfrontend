@@ -101,6 +101,7 @@ const ProductPage = ({
 const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
   return (
     <div className="single-product">
+
       {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
       <img
         id="image"
@@ -108,6 +109,7 @@ const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
         src={product.image}
         title="source: imgur.com"
       />
+
       <p>
         <span>
           <strong> Title: </strong>
