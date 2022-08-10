@@ -10,7 +10,7 @@ import Cart from "./Pages/Cart";
 import Admin from "./Pages/Admin";
 import { useEffect } from "react";
 
-const urlEndpoint = "http://localhost:4000";
+const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
 function App() {
   const [isAuthLoading, setIsAuthLoading] = useState(false);
