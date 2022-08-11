@@ -1,11 +1,13 @@
 import React from "react";
+import { useAuth } from "../Hooks/Auth";
 
 const Cart = ({
    products,
-   user,
    currentCart,
    setCurrentCart
 }) => {
+   const { user } = useAuth()
+   console.log("cart ", currentCart)
    return <div
       className="cart-page">
       <h1>Your Cart</h1>
@@ -14,18 +16,52 @@ const Cart = ({
           display: checkout button */}
 
       <div>{currentCart.map((product) => {
-         return
-         <DisplayCartProduct
-            product={product}
-            key={product.productID} />
+         return (
+            <DisplayCartProduct
+               product={product}
+               key={product.productID} />)
       })}
       </div>
+      {/* Button for Checkout
+         HTTP POST: 
+            In header send:
+               token: userToken
+            In body send: 
+               currentCart
+         Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
+         after save success, navigate to checkout page */}
+      <button
+         id="checkout-button"
+         type="submit"
+         onClick={async () => {
+            cartCheckout(currentCart, user);
+         }}
+      >
+         Check Out
+      </button>
    </div>
 };
 
+const cartCheckout = async (cart, userToken) => {
+   const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`
+   const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json',
+         token: userToken
+      },
+      body: JSON.stringify({ cart })
+   });
+   const responseJSON = await response.json();
+   return responseJSON;
+}
+
+
+
+
 const DisplayCartProduct = ({ product, user, currentCart, setCurrentCart }) => {
    return (
-      <div classname="single-cart-product">
+      <div className="single-cart-product">
          <img
             id="cart-image"
             src={product.image}
@@ -96,7 +132,7 @@ Cart functionality:
     - don't store user cart in db until checkout, save cart in state until checkout.
     -(stretch) save cart to local storage
 
-- onClick add to cart function: 
+- onClick add to cart function:
     - stretch: add validation so user cannot add to cart unless logged in (alert: "Must be logged in to add item to cart")
     - adds product object to user's current cart (specifically to the user that is logged in.)
     -stretch: update badge on cart icon to display number of items in cart
