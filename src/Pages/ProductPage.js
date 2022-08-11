@@ -14,6 +14,8 @@ const ProductPage = ({
     setLimit,
     page,
     setPage,
+    currentCart,
+    setCurrentCart
 }) => {
     return (
         <div className="products-page">
@@ -91,7 +93,8 @@ const ProductPage = ({
             ></input>
             <div>
                 {products.map((product) => {
-                    return <DisplayProduct product={product} key={product.productId} />;
+                    return <DisplayProduct currentCart={currentCart}
+                        setCurrentCart={setCurrentCart} product={product} key={product.productId} />;
                 })}
             </div>
         </div>
@@ -145,7 +148,9 @@ const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
                 id="addToCart"
                 type="submit"
                 onClick={async () => {
-                    const updatedCart = [];
+                    console.log("current cart", currentCart)
+                    const updatedCart = [...currentCart];
+                    //check for existing product in cart to set quantity
                     updatedCart.push(product);
                     setCurrentCart(updatedCart);
                 }}
