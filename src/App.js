@@ -9,6 +9,7 @@ import ProductPage from "./Pages/ProductPage";
 import Cart from "./Pages/Cart";
 import Admin from "./Pages/Admin";
 import { useEffect } from "react";
+import { async } from "q";
 
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
@@ -27,6 +28,19 @@ function App() {
   const [limit, setLimit] = useState(Number());
   const [page, setPage] = useState(Number(1));
   const [isFetching, setIsFetching] = useState(false);
+
+  const getProductForCart = async (product) => {
+    const url = urlEndpoint + "/cart";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+    const responseJSON = await response.json();
+    return responseJSON;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,6 +128,7 @@ function App() {
               path="cart"
               element={
                 <Cart
+                  getProductForCart={getProductForCart}
                   currentCart={currentCart}
                   setCurrentCart={setCurrentCart}
                 />

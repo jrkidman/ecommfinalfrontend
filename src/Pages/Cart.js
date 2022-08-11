@@ -27,4 +27,9 @@ Cart functionality:
     - in a separate collection
     - don't store user cart in db until checkout, save cart in state until checkout. 
     -(stretch) save cart to local storage
+
+- onClick add to cart function: 
+    - stretch: add validation so user cannot add to cart unless logged in (alert: "Must be logged in to add item to cart")
+    - adds product object to user's current cart (specifically to the user that is logged in.)
+    -stretch: update badge on cart icon to display number of items in cart
  */
