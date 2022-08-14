@@ -8,6 +8,7 @@ const AuthContext = createContext();
 */
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userScope, setUserScope] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
     const loginResult = await loginUser(email, password);
     if (loginResult.success) {
       setUserToken(loginResult.token);
+      setUserScope(loginResult.scope);
       navigate(redirectLocation, { replace: true });
     }
     setIsAuthLoading(false);
@@ -75,6 +77,7 @@ export const AuthProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       user,
+      scope: userScope,
       verifyAdmin,
       login,
       logout,
@@ -120,6 +123,21 @@ const loginUser = async (email, password) => {
   const responseJSON = await response.json();
   return responseJSON;
 };
+
+// Trying to create profile page that has access to orderhistory and wishlist for specific logged in user
+
+// const profile = async () => {
+//   const url = `${urlEndpoint}/auth/profile`;
+//   const response = await fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({}),
+//   });
+//   const responseJSON = await response.json();
+//   return responseJSON;
+// };
 
 const validateAdmin = async (userToken) => {
   const url = `${urlEndpoint}/auth/validate-admin`;

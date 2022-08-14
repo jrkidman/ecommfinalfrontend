@@ -3,8 +3,8 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/Auth";
 
 const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
-  const { user, logout, email } = useAuth();
-  // console.log({ email });
+  const { user, logout, scope } = useAuth();
+  console.log({ scope });
 
   return (
     <div id="navdiv">
@@ -29,10 +29,13 @@ const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
           )}
         </ul>
         {/* IF the user exists, and is logged in... display these links in the navbar. */}
-        {user && (
+        {user && scope === "admin" && (
           <ul>
             <li>
               <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/admin">Admin</Link>
             </li>
             <li>
               <Link to="/profile">Profile</Link>
@@ -46,7 +49,7 @@ const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
             <br />
             <span>
               {/* How do we access the user.email key value to display the logged in user?? */}
-              <strong>Currently Logged In As: {email}</strong>
+              <strong>Currently Logged In As: {}</strong>
             </span>
             <button
               // On click, button will run logout function pulled from Auth.js with useAuth context hook

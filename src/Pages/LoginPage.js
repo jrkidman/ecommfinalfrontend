@@ -9,6 +9,8 @@ const LoginPage = () => {
   const { login } = useAuth();
   return (
     <div>
+      <p>Welcome back! Please login below.</p>
+      {/* What is this login message for? */}
       <h3>{loginMessage}</h3>
       {/* text input */}
       <label>Email:</label>
