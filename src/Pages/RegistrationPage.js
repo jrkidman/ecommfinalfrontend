@@ -10,6 +10,11 @@ const RegistrationPage = ({ isAuthLoading, setIsAuthLoading }) => {
   const { login, register } = useAuth();
   return (
     <div>
+      <p>Welcome to the Fakery registration page!</p>
+      <p>Please enter an email and password to create an account</p>
+      <p>
+        Note: for admin accounts, please use your @codeimmersives email address.
+      </p>
       {/* text input */}
       <label>Email:</label>
       <input
