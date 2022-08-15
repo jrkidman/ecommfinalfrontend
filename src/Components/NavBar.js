@@ -4,7 +4,7 @@ import { useAuth } from "../Hooks/Auth";
 
 const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
   const { user, logout, scope } = useAuth();
-  console.log({ scope });
+  // console.log({ scope });
 
   return (
     <div id="navdiv">
