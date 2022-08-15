@@ -19,7 +19,7 @@ const NavBar = ({ isAuthLoading, setIsAuthLoading }) => {
               <Link to="/login">Login</Link>
             </li>
             <li>
-              <Link to="/registration">Registration</Link>
+              <Link to="/registration">Register</Link>
             </li>
             <li>
               <Link to="/products">Products</Link>

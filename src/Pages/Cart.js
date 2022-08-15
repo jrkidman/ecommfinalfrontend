@@ -1,26 +1,22 @@
 import React from "react";
 import { useAuth } from "../Hooks/Auth";
 
-const Cart = ({
-   products,
-   currentCart,
-   setCurrentCart
-}) => {
-   const { user } = useAuth()
-   console.log("cart ", currentCart)
-   return <div
-      className="cart-page">
+const Cart = ({ products, currentCart, setCurrentCart }) => {
+  const { user } = useAuth();
+  // console.log("cart ", currentCart)
+  return (
+    <div className="cart-page">
       <h1>Your Cart</h1>
       {/* display: image, title, quantity/remove item, price per item/Price
           display:                    total items          total price
           display: checkout button */}
 
-      <div>{currentCart.map((product) => {
-         return (
-            <DisplayCartProduct
-               product={product}
-               key={product.productID} />)
-      })}
+      <div>
+        {currentCart.map((product) => {
+          return (
+            <DisplayCartProduct product={product} key={product.productID} />
+          );
+        })}
       </div>
       {/* Button for Checkout
          HTTP POST: 
@@ -31,82 +27,67 @@ const Cart = ({
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
       <button
-         id="checkout-button"
-         type="submit"
-         onClick={async () => {
-            cartCheckout(currentCart, user);
-         }}
+        id="checkout-button"
+        type="submit"
+        onClick={async () => {
+          cartCheckout(currentCart, user);
+        }}
       >
-         Check Out
+        Check Out
       </button>
-   </div>
+    </div>
+  );
 };
 
 const cartCheckout = async (cart, userToken) => {
-   const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`
-   const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-         'Content-Type': 'application/json',
-         token: userToken
-      },
-      body: JSON.stringify({ cart })
-   });
-   const responseJSON = await response.json();
-   return responseJSON;
-}
-
-
-
+  const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: userToken,
+    },
+    body: JSON.stringify({ cart }),
+  });
+  const responseJSON = await response.json();
+  return responseJSON;
+};
 
 const DisplayCartProduct = ({ product, user, currentCart, setCurrentCart }) => {
-   return (
-      <div className="single-cart-product">
-         <img
-            id="cart-image"
-            src={product.image}
-            title="source: imgur.com"
-         />
+  return (
+    <div className="single-cart-product">
+      <img id="cart-image" src={product.image} title="source: imgur.com" />
 
-         <p>
-            <span>
-               {product.title}
-            </span>
-         </p>
+      <p>
+        <span>{product.title}</span>
+      </p>
 
-         <p>
-            <span>
-               Quantity: get quantity from currentCart
-            </span>
-         </p>
+      <p>
+        <span>Quantity: get quantity from currentCart</span>
+      </p>
 
-         <button
-            id="removeItem"
-            type="reset"
-            onClick={async () => {
-               //remove single item from currentCart array here
-            }}
-         >
-            Remove Item
-         </button>
+      <button
+        id="removeItem"
+        type="reset"
+        onClick={async () => {
+          //remove single item from currentCart array here
+        }}
+      >
+        Remove Item
+      </button>
 
-         <p>
-            <span>
-               Price per item: {product.price}
-            </span>
-         </p>
+      <p>
+        <span>Price per item: {product.price}</span>
+      </p>
 
-         <p>
-            <span>
-               Total Price: need function to sum prices of products in currentCart
-            </span>
-         </p>
-
-      </div>
-   )
-}
-
-
+      <p>
+        <span>
+          Total Price: need function to sum prices of products in currentCart
+        </span>
+      </p>
+    </div>
+  );
+};
 
 export default Cart;
 

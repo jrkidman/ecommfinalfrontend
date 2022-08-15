@@ -8,6 +8,7 @@ import LoginPage from "./Pages/LoginPage";
 import ProductPage from "./Pages/ProductPage";
 import Cart from "./Pages/Cart";
 import Admin from "./Pages/Admin";
+import Profile from "./Pages/Profile";
 import { useEffect } from "react";
 import { async } from "q";
 
@@ -16,11 +17,21 @@ const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 function App() {
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [currentCart, setCurrentCart] = useState([]);
+
+  // variable assigned to order data fetched from server, and converted to JSON
+  const [orderJSON, setOrderJSON] = useState({ message: [] });
   const [orderHistory, setOrderHistory] = useState([]);
+
+  // variable assigned to wishlist data fetched from server, and converted to JSON
+  const [wishJSON, setWishJSON] = useState({ message: [] });
+  const [wishlist, setWishlist] = useState([]);
+
   // variable to determine if logged in user is an admin
   const [isAdmin, setIsAdmin] = useState(false);
+
   // variable assigned to product data fetched from server, and converted to JSON
   const [serverJSON, setServerJSON] = useState({ message: [] });
+
   const [sortField, setSortField] = useState("productId");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [filterField, setFilterField] = useState("title");
@@ -29,6 +40,7 @@ function App() {
   const [page, setPage] = useState(Number(1));
   const [isFetching, setIsFetching] = useState(false);
 
+  //
   const getProductForCart = async (product) => {
     const url = urlEndpoint + "/cart";
     const response = await fetch(url, {
@@ -41,6 +53,26 @@ function App() {
     const responseJSON = await response.json();
     return responseJSON;
   };
+
+  // ----IN PROGRESS----
+
+  // Get orderHistory from user object
+  const getUserOrderHistory = async (order) => {
+    const url = urlEndpoint + "/order";
+  };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const url = `${urlEndpoint}/orders`;
+  //     const apiResponse = await fetch(url);
+  //     const apiJSON = await apiResponse.json();
+  //     setOrderJSON(apiJSON);
+  //     return;
+  //   };
+  //   fetchData();
+  // });
+
+  // ----IN PROGRESS----
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +91,6 @@ function App() {
         <Routes>
           <Route path="/" element={<NavBar />}>
             <Route index element={<HomePage />} />
-
             <Route
               path="login"
               element={
@@ -122,6 +153,20 @@ function App() {
             <Route
               path="admin"
               element={<Admin isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
+            />
+
+            <Route
+              path="profile"
+              element={
+                <Profile
+                  wishes={wishJSON.message}
+                  orders={orderJSON.message}
+                  orderHistory={orderHistory}
+                  setOrderHistory={setOrderHistory}
+                  wishlist={wishlist}
+                  setWishlist={setWishlist}
+                />
+              }
             />
 
             <Route
