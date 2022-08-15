@@ -124,21 +124,6 @@ const loginUser = async (email, password) => {
   return responseJSON;
 };
 
-// Trying to create profile page that has access to orderhistory and wishlist for specific logged in user
-
-// const profile = async () => {
-//   const url = `${urlEndpoint}/auth/profile`;
-//   const response = await fetch(url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({}),
-//   });
-//   const responseJSON = await response.json();
-//   return responseJSON;
-// };
-
 const validateAdmin = async (userToken) => {
   const url = `${urlEndpoint}/auth/validate-admin`;
   const response = await fetch(url, {

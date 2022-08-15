@@ -63,14 +63,21 @@
 }
 
 /* Products Page CSS */
+
+/* .single-product {
+  height: 250px;
+  width: 250 px;
+  border: solid black 3px;
+} */
+
 .products-page {
   margin-top: 100px;
   /* temp fix */
 }
 
 #image {
-  height: 350px;
-  width: 350px;
+  height: 200px;
+  width: 200px;
 }
 
 #cart-image {
