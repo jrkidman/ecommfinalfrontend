@@ -7,13 +7,28 @@ const AuthContext = createContext();
 @Source: https://blog.logrocket.com/complete-guide-authentication-with-react-router-v6/#basic-routing-with-routes
 */
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [userToken, setUserToken] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
   const [userScope, setUserScope] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
   useEffect(() => {
-    const userToken = getUserToken();
-    setUser(userToken);
+    const userData = getUserData();
+    if (!userData) {
+        setUserToken(null);
+        setUserEmail(null);
+        setUserScope(null);
+        return;
+    }
+    if (userData.token) {
+        setUserToken(userData.token);
+    }
+    if (userData.email) {
+        setUserEmail(userData.email);
+    }
+    if (userData.scope) {
+        setUserScope(userData.scope);
+    }
   }, [isAuthLoading]);
 
   const navigate = useNavigate();
@@ -31,8 +46,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthLoading(true);
     const loginResult = await loginUser(email, password);
     if (loginResult.success) {
-      setUserToken(loginResult.token);
-      setUserScope(loginResult.scope);
+      setUserData(loginResult.token, loginResult.scope, loginResult.email);
       navigate(redirectLocation, { replace: true });
     }
     setIsAuthLoading(false);
@@ -42,16 +56,22 @@ export const AuthProvider = ({ children }) => {
   // call this function to sign out logged in user
   const logout = async (redirectLocation = "/") => {
     setIsAuthLoading(true);
-    await removeUserToken(); // This has to be awaited for the useEffect to work
+    await removeUserData(); // This has to be awaited for the useEffect to work
     setIsAuthLoading(false);
     navigate(redirectLocation, { replace: true });
   };
 
   const verifyAdmin = async () => {
+    if (!userToken) {
+        return false;
+    }
     setIsAuthLoading(true);
-    const isAdminResult = await validateAdmin(user);
+    const isAdminResult = await validateAdmin(userToken);
     setIsAuthLoading(false);
     if (isAdminResult.success) {
+        if (isAdminResult.isAdmin) {
+            setUserScope("admin");
+        }
       return isAdminResult.isAdmin;
     }
     return false;
@@ -76,14 +96,15 @@ export const AuthProvider = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      user,
+      user: userToken,
+      email: userEmail,
       scope: userScope,
       verifyAdmin,
       login,
       logout,
       register,
     }),
-    [user]
+    [userToken]
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
@@ -137,19 +158,19 @@ const validateAdmin = async (userToken) => {
   return responseJSON;
 };
 
-const setUserToken = (token) => {
+const setUserData = (token, scope, email) => {
   localStorage.setItem(
     process.env.REACT_APP_TOKEN_HEADER_KEY,
-    JSON.stringify(token)
+    JSON.stringify({token, scope, email})
   );
 };
 
-const removeUserToken = () => {
+const removeUserData = () => {
   localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
   return true;
 };
 
-const getUserToken = () => {
+const getUserData = () => {
   return JSON.parse(
     localStorage.getItem(process.env.REACT_APP_TOKEN_HEADER_KEY)
   );

@@ -53,7 +53,7 @@ const cartCheckout = async (cart, userToken) => {
   return responseJSON;
 };
 
-const DisplayCartProduct = ({ product, user, currentCart, setCurrentCart }) => {
+const DisplayCartProduct = ({ product }) => {
   return (
     <div className="single-cart-product">
       <img id="cart-image" src={product.image} title="source: imgur.com" />
@@ -63,7 +63,7 @@ const DisplayCartProduct = ({ product, user, currentCart, setCurrentCart }) => {
       </p>
 
       <p>
-        <span>Quantity: get quantity from currentCart</span>
+        <span>Quantity: {product.quantity}</span>
       </p>
 
       <button
