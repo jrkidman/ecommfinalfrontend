@@ -117,6 +117,7 @@ const DisplayProduct = ({
 }) => {
   return (
     <div className="single-product">
+      {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
       <img
         id="image"
         alt="some noms"
@@ -158,12 +159,27 @@ const DisplayProduct = ({
       <button
         id="addToCart"
         type="submit"
-        onClick={async () => {
+        onClick={() => {
           console.log("current cart", currentCart);
           const updatedCart = [...currentCart];
           //check for existing product in cart to set quantity
-          updatedCart.push(product);
-          setCurrentCart(updatedCart);
+
+          const addToCart = (product) => {
+            console.log("product ", product);
+            const checkId = updatedCart.findIndex(
+              (cartProduct) => cartProduct.productId === product.productId
+            );
+            if (checkId !== -1) {
+              updatedCart[checkId].quantity++;
+              console.log("Quantity updated:", updatedCart);
+            } else {
+              product.quantity = 1;
+              updatedCart.push(product);
+              console.log("Product added to cart:", updatedCart);
+            }
+            setCurrentCart(updatedCart);
+          };
+          addToCart(product);
         }}
       >
         Add to Cart
