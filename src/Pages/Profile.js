@@ -13,7 +13,7 @@ const Profile = ({
       <h1>(Users Name) Profile</h1>
 
       {/* function to map over wishlists and display separate wishlists */}
-      <div>
+      {/* <div>
         {wishes.map((wish) => {
           return (
             <DisplayUserWishlist
@@ -23,7 +23,7 @@ const Profile = ({
             />
           );
         })}
-      </div>
+      </div> */}
 
       <br />
 
@@ -64,22 +64,22 @@ const DisplayOrderHistory = ({ order, orderHistory, setOrderHistory }) => {
 };
 
 // Take in props to display user wishlists when button is clicked.
-const DisplayUserWishlist = ({ wish, wishlist, setWishlist }) => {
-  return (
-    <div className="user-wishlist">
-      <button
-        id="displayWishlist"
-        type="submit"
-        onClick={async () => {
-          console.log("Wishlist:", wishlist);
-          const updatedWishlist = [...wishlist];
-          updatedWishlist.push(wish);
-          setWishlist(updatedWishlist);
-        }}
-      >
-        View Wishlists
-      </button>
-    </div>
-  );
-};
+// const DisplayUserWishlist = ({ wish, wishlist, setWishlist }) => {
+//   return (
+//     <div className="user-wishlist">
+//       <button
+//         id="displayWishlist"
+//         type="submit"
+//         onClick={async () => {
+//           console.log("Wishlist:", wishlist);
+//           const updatedWishlist = [...wishlist];
+//           updatedWishlist.push(wish);
+//           setWishlist(updatedWishlist);
+//         }}
+//       >
+//         View Wishlists
+//       </button>
+//     </div>
+//   );
+// };
 export default Profile;
