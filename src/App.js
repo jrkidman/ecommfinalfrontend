@@ -18,14 +18,6 @@ function App() {
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [currentCart, setCurrentCart] = useState([]);
 
-  // variable assigned to order data fetched from server, and converted to JSON
-  const [orderJSON, setOrderJSON] = useState({ message: [] });
-  const [orderHistory, setOrderHistory] = useState([]);
-
-  // variable assigned to wishlist data fetched from server, and converted to JSON
-  const [wishJSON, setWishJSON] = useState({ message: [] });
-  const [wishlist, setWishlist] = useState([]);
-
   // variable to determine if logged in user is an admin
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -40,7 +32,6 @@ function App() {
   const [page, setPage] = useState(Number(1));
   const [isFetching, setIsFetching] = useState(false);
 
-  //
   const getProductForCart = async (product) => {
     const url = urlEndpoint + "/cart";
     const response = await fetch(url, {
@@ -53,26 +44,6 @@ function App() {
     const responseJSON = await response.json();
     return responseJSON;
   };
-
-  // ----IN PROGRESS----
-
-  // Get orderHistory from user object
-  const getUserOrderHistory = async (order) => {
-    const url = urlEndpoint + "/order";
-  };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const url = `${urlEndpoint}/orders`;
-  //     const apiResponse = await fetch(url);
-  //     const apiJSON = await apiResponse.json();
-  //     setOrderJSON(apiJSON);
-  //     return;
-  //   };
-  //   fetchData();
-  // });
-
-  // ----IN PROGRESS----
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,8 +72,6 @@ function App() {
                   setIsAuthLoading={setIsAuthLoading}
                   currentCart={currentCart}
                   setCurrentCart={setCurrentCart}
-                  orderHistory={orderHistory}
-                  setOrderHistory={setOrderHistory}
                 />
               }
             />
@@ -155,19 +124,7 @@ function App() {
               element={<Admin isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
             />
 
-            <Route
-              path="profile"
-              element={
-                <Profile
-                  wishes={wishJSON.message}
-                  orders={orderJSON.message}
-                  orderHistory={orderHistory}
-                  setOrderHistory={setOrderHistory}
-                  wishlist={wishlist}
-                  setWishlist={setWishlist}
-                />
-              }
-            />
+            <Route path="profile" element={<Profile />} />
 
             <Route
               path="cart"

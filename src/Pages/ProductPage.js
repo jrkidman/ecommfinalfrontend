@@ -112,8 +112,8 @@ const DisplayProduct = ({
   wish,
   currentCart,
   setCurrentCart,
-  wishlist,
-  setWishlist,
+  // wishlist,
+  // setWishlist,
 }) => {
   return (
     <div className="single-product">
@@ -185,7 +185,7 @@ const DisplayProduct = ({
         Add to Cart
       </button>
       <br />
-      <button
+      {/* <button
         id="addToWishlist"
         type="submit"
         onClick={async () => {
@@ -197,7 +197,7 @@ const DisplayProduct = ({
         }}
       >
         Add to Wishlist
-      </button>
+      </button> */}
       <hr></hr>
     </div>
   );
