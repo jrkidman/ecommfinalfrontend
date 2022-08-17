@@ -14,7 +14,12 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
       <div>
         {currentCart.map((product) => {
           return (
-            <DisplayCartProduct product={product} key={product.productID} />
+            <DisplayCartProduct
+              currentCart={currentCart}
+              setCurrentCart={setCurrentCart}
+              product={product}
+              key={product.productID}
+            />
           );
         })}
       </div>
@@ -53,7 +58,7 @@ const cartCheckout = async (cart, userToken) => {
   return responseJSON;
 };
 
-const DisplayCartProduct = ({ product }) => {
+const DisplayCartProduct = ({ product, currentCart, setCurrentCart }) => {
   return (
     <div className="single-cart-product">
       <img id="cart-image" src={product.image} title="source: imgur.com" />
@@ -68,9 +73,24 @@ const DisplayCartProduct = ({ product }) => {
 
       <button
         id="removeItem"
-        type="reset"
-        onClick={async () => {
+        type="submit"
+        onClick={() => {
           //remove single item from currentCart array here
+          console.log("current cart", currentCart);
+          const updatedCart = [...currentCart];
+          console.log(updatedCart);
+          const removeFromCart = (product) => {
+            console.log("product ", product);
+            const checkId = updatedCart.findIndex(
+              (cartProduct) => cartProduct.productId === product.productId
+            );
+
+            updatedCart.splice(checkId, 1);
+            console.log("Product removed from cart:", updatedCart);
+
+            setCurrentCart(updatedCart);
+          };
+          removeFromCart(product);
         }}
       >
         Remove Item

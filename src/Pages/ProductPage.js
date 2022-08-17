@@ -107,7 +107,9 @@ const ProductPage = ({
   );
 };
 
-const DisplayProduct = ({ product, wish, currentCart, setCurrentCart }) => {
+
+const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
+
   return (
     <div className="single-product">
       {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
