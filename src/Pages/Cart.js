@@ -2,28 +2,47 @@ import React from "react";
 import { useAuth } from "../Hooks/Auth";
 
 const Cart = ({ products, currentCart, setCurrentCart }) => {
-  const { user } = useAuth();
-  // console.log("cart ", currentCart)
-  return (
-    <div className="cart-page">
-      <h1>Your Cart</h1>
-      {/* display: image, title, quantity/remove item, price per item/Price
+   const { user } = useAuth();
+   // console.log("cart ", currentCart)
+   let totalPrice = 0;
+
+   if (currentCart.length === 0) {
+      totalPrice = "Your cart is empty.";
+   }
+   else {
+      function amount(item) {
+         return item.quantity * item.price;
+      }
+
+      function sum(prev, next) {
+         return prev + next;
+      }
+
+      totalPrice = currentCart.map(amount).reduce(sum);
+      console.log("totalPrice", totalPrice);
+   }
+
+
+   return (
+      <div className="cart-page">
+         <h1>Your Cart</h1>
+         {/* display: image, title, quantity/remove item, price per item/Price
           display:                    total items          total price
           display: checkout button */}
 
-      <div>
-        {currentCart.map((product) => {
-          return (
-            <DisplayCartProduct
-              currentCart={currentCart}
-              setCurrentCart={setCurrentCart}
-              product={product}
-              key={product.productID}
-            />
-          );
-        })}
-      </div>
-      {/* Button for Checkout
+         <div>
+            {currentCart.map((product) => {
+               return (
+                  <DisplayCartProduct
+                     currentCart={currentCart}
+                     setCurrentCart={setCurrentCart}
+                     product={product}
+                     key={product.productID}
+                  />
+               );
+            })}
+         </div>
+         {/* Button for Checkout
          HTTP POST: 
             In header send:
                token: userToken
@@ -31,103 +50,81 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
                currentCart
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
-      <p>
-        <span>Total Price: {totalPrice}</span>
-      </p>
-      <button
-        id="checkout-button"
-        type="submit"
-        onClick={async () => {
-          cartCheckout(currentCart, user);
-        }}
-      >
-        Check Out
-      </button>
-    </div>
-  );
-};
-const totalPrice = ({ currentCart }) => {
-  // currentCart.forEach((price) => {
-  //   let currentPrice = 0;
-  //   console.log("currentCart.product.price", currentCart.product.price);
-  //   currentPrice += currentCart.product.price;
+         <p>
+            <span>Total Price: ${totalPrice}.00</span>
+         </p>
+         <button
+            id="checkout-button"
+            type="submit"
+            onClick={async () => {
+               cartCheckout(currentCart, user);
+            }}
+         >
+            Check Out
+         </button>
+      </div>
+   );
 
-  //   return Number(currentPrice);
-  // });
-  // for (let i = 0; i < currentCart.length; i++) {
-  //   let currentPrice = 0;
-  //   currentPrice += currentCart[i].price;
-  //   return Number(currentPrice);
-  // }
-
-  // let total = currentCart.reduce(function (accumulator, item) {
-  //   return accumulator + item.quantity * item.price;
-  // }, 0);
-  currentCart
-    .map((item) => item.quantity * item.price)
-    .reduce((prev, next) => prev + next);
-  return totalPrice();
 };
 
-console.log("totalPrice", totalPrice());
 const cartCheckout = async (cart, userToken) => {
-  const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      token: userToken,
-    },
-    body: JSON.stringify({ cart }),
-  });
-  const responseJSON = await response.json();
-  return responseJSON;
+   const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`;
+   const response = await fetch(url, {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json",
+         token: userToken,
+      },
+      body: JSON.stringify({ cart }),
+   });
+   const responseJSON = await response.json();
+   return responseJSON;
 };
 
 const DisplayCartProduct = ({ product, currentCart, setCurrentCart }) => {
-  return (
-    <div className="single-cart-product">
-      <img id="cart-image" src={product.image} title="source: imgur.com" />
+   return (
+      <div className="single-cart-product">
+         <img id="cart-image" src={product.image} title="source: imgur.com" />
 
-      <p>
-        <span>{product.title}</span>
-      </p>
+         <p>
+            <span>{product.title}</span>
+         </p>
 
-      <p>
-        <span>Quantity: {product.quantity}</span>
-      </p>
+         <p>
+            <span>Quantity: {product.quantity}</span>
+         </p>
 
-      <button
-        id="removeItem"
-        type="submit"
-        onClick={() => {
-          //remove single item from currentCart array here
-          console.log("current cart", currentCart);
-          const updatedCart = [...currentCart];
-          console.log(updatedCart);
-          const removeFromCart = (product) => {
-            console.log("product ", product);
-            const checkId = updatedCart.findIndex(
-              (cartProduct) => cartProduct.productId === product.productId
-            );
+         <button
+            id="removeItem"
+            type="submit"
+            onClick={() => {
+               //remove single item from currentCart array here
+               console.log("current cart", currentCart);
+               const updatedCart = [...currentCart];
+               console.log(updatedCart);
+               const removeFromCart = (product) => {
+                  console.log("product ", product);
+                  const checkId = updatedCart.findIndex(
+                     (cartProduct) => cartProduct.productId === product.productId
+                  );
 
-            updatedCart.splice(checkId, 1);
-            console.log("Product removed from cart:", updatedCart);
+                  updatedCart.splice(checkId, 1);
+                  console.log("Product removed from cart:", updatedCart);
 
-            setCurrentCart(updatedCart);
-          };
-          removeFromCart(product);
-        }}
-      >
-        Remove Item
-      </button>
+                  setCurrentCart(updatedCart);
+               };
+               removeFromCart(product);
+            }}
+         >
+            Remove Item
+         </button>
 
-      <p>
-        <span>Price per item: {product.price}</span>
-      </p>
-      <hr />
-    </div>
-  );
+         <p>
+            <span>Price per item: ${product.price}.00</span>
+         </p>
+         <hr />
+      </div>
+   );
 };
 
 export default Cart;
