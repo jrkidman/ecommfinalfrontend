@@ -31,6 +31,9 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
                currentCart
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
+      <p>
+        <span>Total Price: {totalPrice}</span>
+      </p>
       <button
         id="checkout-button"
         type="submit"
@@ -43,7 +46,30 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
     </div>
   );
 };
+const totalPrice = ({ currentCart }) => {
+  // currentCart.forEach((price) => {
+  //   let currentPrice = 0;
+  //   console.log("currentCart.product.price", currentCart.product.price);
+  //   currentPrice += currentCart.product.price;
 
+  //   return Number(currentPrice);
+  // });
+  // for (let i = 0; i < currentCart.length; i++) {
+  //   let currentPrice = 0;
+  //   currentPrice += currentCart[i].price;
+  //   return Number(currentPrice);
+  // }
+
+  // let total = currentCart.reduce(function (accumulator, item) {
+  //   return accumulator + item.quantity * item.price;
+  // }, 0);
+  currentCart
+    .map((item) => item.quantity * item.price)
+    .reduce((prev, next) => prev + next);
+  return totalPrice();
+};
+
+console.log("totalPrice", totalPrice());
 const cartCheckout = async (cart, userToken) => {
   const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`;
   const response = await fetch(url, {
@@ -99,12 +125,7 @@ const DisplayCartProduct = ({ product, currentCart, setCurrentCart }) => {
       <p>
         <span>Price per item: {product.price}</span>
       </p>
-
-      <p>
-        <span>
-          Total Price: need function to sum prices of products in currentCart
-        </span>
-      </p>
+      <hr />
     </div>
   );
 };
