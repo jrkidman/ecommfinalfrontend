@@ -34,7 +34,7 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <h1>(Users Name) Profile</h1>
+      <h1>Order History</h1>
 
       <br />
 
@@ -59,6 +59,7 @@ const DisplayOrderHistory = ({ order }) => {
           return <li>{product.title}</li>;
         })}
       </ul>
+      <hr />
     </div>
   );
 };

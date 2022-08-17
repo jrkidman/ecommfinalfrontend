@@ -1,9 +1,13 @@
 import React from "react";
 import { useAuth } from "../Hooks/Auth";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ products, currentCart, setCurrentCart }) => {
+
+   const navigate = useNavigate();
    const { user } = useAuth();
    // console.log("cart ", currentCart)
+
    let totalPrice = 0;
 
    if (currentCart.length === 0) {
@@ -19,7 +23,7 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
       }
 
       totalPrice = currentCart.map(amount).reduce(sum);
-      console.log("totalPrice", totalPrice);
+      // console.log("totalPrice", totalPrice);
    }
 
 
@@ -57,8 +61,10 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
             id="checkout-button"
             type="submit"
             onClick={async () => {
-               cartCheckout(currentCart, user);
-            }}
+               await cartCheckout(currentCart, user);
+               navigate("/profile")
+            }
+            }
          >
             Check Out
          </button>
