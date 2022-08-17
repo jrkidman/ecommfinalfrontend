@@ -107,14 +107,7 @@ const ProductPage = ({
   );
 };
 
-const DisplayProduct = ({
-  product,
-  wish,
-  currentCart,
-  setCurrentCart,
-  // wishlist,
-  // setWishlist,
-}) => {
+const DisplayProduct = ({ product, wish, currentCart, setCurrentCart }) => {
   return (
     <div className="single-product">
       {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
@@ -185,19 +178,6 @@ const DisplayProduct = ({
         Add to Cart
       </button>
       <br />
-      {/* <button
-        id="addToWishlist"
-        type="submit"
-        onClick={async () => {
-          console.log("current wishlist", wishlist);
-          const updatedWishlist = [...wishlist];
-          //check for existing product in cart to set quantity
-          updatedWishlist.push(wish);
-          setWishlist(updatedWishlist);
-        }}
-      >
-        Add to Wishlist
-      </button> */}
       <hr></hr>
     </div>
   );
