@@ -58,12 +58,7 @@ const cartCheckout = async (cart, userToken) => {
   return responseJSON;
 };
 
-const DisplayCartProduct = ({
-  product,
-  // wish,
-  currentCart,
-  setCurrentCart,
-}) => {
+const DisplayCartProduct = ({ product, currentCart, setCurrentCart }) => {
   return (
     <div className="single-cart-product">
       <img id="cart-image" src={product.image} title="source: imgur.com" />
