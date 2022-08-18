@@ -107,57 +107,54 @@ const ProductPage = ({
     );
 };
 
-
 const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
-
-    return (
-        <div className="single-product">
-            {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
-            <img
-                id="image"
-                alt="some noms"
-                src={product.image}
-                title="source: imgur.com"
-            />
-
-            <p>
-                <span>
-                    <strong> Title: </strong>
-                    <br />
-                </span>
-                {product.title}
-            </p>
-            <p>
-                <span>
-                    <strong>Category: </strong> <br />
-                </span>
-                {product.category}
-            </p>
-            <p>
-                <span>
-                    <strong>Price: </strong> <br />
-                </span>
-                ${product.price}.00
-            </p>
-            <p>
-                <span>
-                    <strong>Description </strong> <br />
-                </span>
-                {product.description}
-            </p>
-            <p>
-                <span>
-                    <strong>ID: </strong> <br />
-                </span>
-                {product.productId}
-            </p>
-            <button
-                id="addToCart"
-                type="submit"
-                onClick={() => {
-                    console.log("current cart", currentCart);
-                    const updatedCart = [...currentCart];
-                    //check for existing product in cart to set quantity
+  return (
+    <div className="single-product">
+      {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
+      <img
+        id="image"
+        alt="some noms"
+        src={product.image}
+        title="source: imgur.com"
+      />
+      <p>
+        <span>
+          <strong> Title: </strong>
+          <br />
+        </span>
+        {product.title}
+      </p>
+      <p>
+        <span>
+          <strong>Category: </strong> <br />
+        </span>
+        {product.category}
+      </p>
+      <p>
+        <span>
+          <strong>Price: </strong> <br />
+        </span>
+        {product.price}
+      </p>
+      <p>
+        <span>
+          <strong>Description </strong> <br />
+        </span>
+        {product.description}
+      </p>
+      <p>
+        <span>
+          <strong>ID: </strong> <br />
+        </span>
+        {product.productId}
+      </p>
+      <button
+        id="addToCart"
+        type="submit"
+        onClick={() => {
+          console.log("current cart", currentCart);
+          const updatedCart = [...currentCart];
+          //check for existing product in cart to set quantity
 
                     const addToCart = (product) => {
                         console.log("product ", product);
