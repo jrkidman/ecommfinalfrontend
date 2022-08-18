@@ -39,7 +39,7 @@
 }
 
 /* NavBar CSS */
-#navdiv {
+#nav-container {
   width: 100%;
   display: inline;
   float: none;
@@ -75,12 +75,29 @@
   /* temp fix */
 }
 
-#image {
-  height: 200px;
-  width: 200px;
-}
 
 #cart-image {
   height: 122px;
   width: 122px;
+}
+
+.product-list__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 10px;
+    color: black;
+}
+
+.product-list__container .product-card {
+    margin: 10px;
+    width: 45%;
+    height: 1000px;
+    overflow-y: scroll;
+}
+
+.product-list__container .product-card__image {
+
 }
