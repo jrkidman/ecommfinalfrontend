@@ -114,7 +114,6 @@ const ProductPage = ({
     );
 };
 
-
 const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
 
     return (
@@ -165,6 +164,7 @@ const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
                     console.log("current cart", currentCart);
                     const updatedCart = [...currentCart];
                     //check for existing product in cart to set quantity
+  
 
                     const addToCart = (product) => {
                         console.log("product ", product);
