@@ -58,7 +58,8 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <body id="home-page"> */}
+      <header id="home-page" className="App-header">
         <Routes>
           <Route path="/" element={<NavBar />}>
             <Route index element={<HomePage />} />
@@ -139,6 +140,7 @@ function App() {
           </Route>
         </Routes>
       </header>
+      {/* </body> */}
     </div>
   );
 }
