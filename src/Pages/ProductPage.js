@@ -16,11 +16,12 @@ const ProductPage = ({
     setPage,
     currentCart,
     setCurrentCart,
+    category,
 }) => {
     return (
         <div className="products-page">
             <h1>Products Page</h1>
-            <label>Sort Field</label>
+            <label>Sort By</label>
             &nbsp;
             <select
                 value={sortField}
@@ -35,7 +36,7 @@ const ProductPage = ({
                 <option value="productId">ID</option>
             </select>
             <br />
-            <label>Sort Order</label>
+            <label>Order</label>
             &nbsp;
             <select
                 value={sortOrder}
@@ -48,7 +49,7 @@ const ProductPage = ({
                 <option value="DESC">Descending</option>
             </select>
             <br />
-            <label>Filter Field</label>
+            {/* <label>Filter By</label>
             &nbsp;
             <select
                 value={filterField}
@@ -59,17 +60,23 @@ const ProductPage = ({
             >
                 <option value="category">Category</option>
             </select>
-            <br />
-            <label>Filter Value: </label>
-            <input
-                type="text"
+            <br /> */}
+            <label>Category: </label>
+            <select
                 value={filterValue}
+                // placeholder="cake, pie, booze infused, cookies, edibles (21+)"
+
                 onChange={(event) => {
                     const newFilterValue = event.target.value;
                     setFilterValue(newFilterValue);
                 }}
-            ></input>
-            <label>Limit</label>
+            >
+                {category.map((cat) => {
+                    return <option value={cat}>{cat}</option>
+                    console.log("cat: ", cat)
+                })}
+            </select>
+            <label>Products Per Page</label>
             <input
                 type="number"
                 min="1"
@@ -106,7 +113,6 @@ const ProductPage = ({
         </div>
     );
 };
-
 
 const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
 
@@ -145,12 +151,12 @@ const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
                 </span>
                 {product.description}
             </p>
-            <p>
+            {/* <p>
                 <span>
                     <strong>ID: </strong> <br />
                 </span>
                 {product.productId}
-            </p>
+            </p> */}
             <button
                 id="addToCart"
                 type="submit"
@@ -158,6 +164,7 @@ const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
                     console.log("current cart", currentCart);
                     const updatedCart = [...currentCart];
                     //check for existing product in cart to set quantity
+  
 
                     const addToCart = (product) => {
                         console.log("product ", product);

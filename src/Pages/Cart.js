@@ -3,31 +3,35 @@ import { useAuth } from "../Hooks/Auth";
 import { useNavigate } from "react-router-dom";
 
 const Cart = ({ products, currentCart, setCurrentCart }) => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  // console.log("cart ", currentCart)
 
-  let totalPrice = 0;
+   const navigate = useNavigate();
+   const { user } = useAuth();
+   // console.log("cart ", currentCart)
 
-  if (currentCart.length === 0) {
-    totalPrice = "Your cart is empty.";
-  } else {
-    function amount(item) {
-      return item.quantity * item.price;
-    }
+   let totalPrice = 0;
 
-    function sum(prev, next) {
-      return prev + next;
-    }
+   if (currentCart.length === 0) {
+      totalPrice = "Your cart is empty.";
+   }
+   else {
+      function amount(item) {
+         return item.quantity * item.price;
+      }
 
-    totalPrice = "$" + currentCart.map(amount).reduce(sum) + ".00";
-    // console.log("totalPrice", totalPrice);
-  }
+      function sum(prev, next) {
+         return prev + next;
+      }
 
-  return (
-    <div className="cart-page">
-      <h1>Your Cart</h1>
-      {/* display: image, title, quantity/remove item, price per item/Price
+      totalPrice = "$" + currentCart.map(amount).reduce(sum) + ".00";
+      // console.log("totalPrice", totalPrice);
+   }
+
+
+   return (
+      <div className="cart-page">
+         <h1>Your Cart</h1>
+         {/* display: image, title, quantity/remove item, price per item/Price
+
           display:                    total items          total price
           display: checkout button */}
 
@@ -51,21 +55,25 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
                currentCart
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
-      <p>
-        <span>Total Price: {totalPrice} </span>
-      </p>
-      <button
-        id="checkout-button"
-        type="submit"
-        onClick={async () => {
-          await cartCheckout(currentCart, user);
-          navigate("/profile");
-        }}
-      >
-        Check Out
-      </button>
-    </div>
-  );
+
+         <p>
+            <span>Total Price: {totalPrice}</span>
+         </p>
+         <button
+            id="checkout-button"
+            type="submit"
+            onClick={async () => {
+               await cartCheckout(currentCart, user);
+               navigate("/profile")
+            }
+            }
+         >
+            Check Out
+         </button>
+      </div>
+   );
+
+
 };
 
 const cartCheckout = async (cart, userToken) => {

@@ -26,11 +26,12 @@ function App() {
 
   const [sortField, setSortField] = useState("productId");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [filterField, setFilterField] = useState("title");
+  const [filterField, setFilterField] = useState("category");
   const [filterValue, setFilterValue] = useState("");
   const [limit, setLimit] = useState(Number());
   const [page, setPage] = useState(Number(1));
   const [isFetching, setIsFetching] = useState(false);
+  const [category, setCategory] = useState([]);
 
   const getProductForCart = async (product) => {
     const url = urlEndpoint + "/cart";
@@ -55,6 +56,21 @@ function App() {
     };
     fetchData();
   }, [sortField, sortOrder, filterField, filterValue, limit, page, isFetching]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = `${urlEndpoint}/products/all?sortField=${sortField}&sortOrder=${sortOrder}&filterField=${filterField}&filterValue=${filterValue}&limit=${limit}&page=${page}`;
+      const apiResponse = await fetch(url);
+      const apiJSON = await apiResponse.json();
+      const categories = apiJSON.message.map((category) => {
+        return category.category;
+      })
+      let uniqueArray = [...new Set(categories)]
+      setCategory(uniqueArray);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="App">
@@ -110,6 +126,7 @@ function App() {
                   setLimit={setLimit}
                   page={page}
                   setPage={setPage}
+                  category={category}
                 />
               }
             >
