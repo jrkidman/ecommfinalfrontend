@@ -22,7 +22,7 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
          return prev + next;
       }
 
-      totalPrice = currentCart.map(amount).reduce(sum);
+      totalPrice = "$" + currentCart.map(amount).reduce(sum) + ".00";
       // console.log("totalPrice", totalPrice);
    }
 
@@ -55,7 +55,7 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
          <p>
-            <span>Total Price: ${totalPrice}.00</span>
+            <span>Total Price: {totalPrice}</span>
          </p>
          <button
             id="checkout-button"

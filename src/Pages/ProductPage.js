@@ -16,11 +16,12 @@ const ProductPage = ({
     setPage,
     currentCart,
     setCurrentCart,
+    category,
 }) => {
     return (
         <div className="products-page">
             <h1>Products Page</h1>
-            <label>Sort Field</label>
+            <label>Sort By</label>
             &nbsp;
             <select
                 value={sortField}
@@ -35,7 +36,7 @@ const ProductPage = ({
                 <option value="productId">ID</option>
             </select>
             <br />
-            <label>Sort Order</label>
+            <label>Order</label>
             &nbsp;
             <select
                 value={sortOrder}
@@ -48,7 +49,7 @@ const ProductPage = ({
                 <option value="DESC">Descending</option>
             </select>
             <br />
-            <label>Filter Field</label>
+            {/* <label>Filter By</label>
             &nbsp;
             <select
                 value={filterField}
@@ -59,17 +60,23 @@ const ProductPage = ({
             >
                 <option value="category">Category</option>
             </select>
-            <br />
-            <label>Filter Value: </label>
-            <input
-                type="text"
+            <br /> */}
+            <label>Category: </label>
+            <select
                 value={filterValue}
+                // placeholder="cake, pie, booze infused, cookies, edibles (21+)"
+
                 onChange={(event) => {
                     const newFilterValue = event.target.value;
                     setFilterValue(newFilterValue);
                 }}
-            ></input>
-            <label>Limit</label>
+            >
+                {category.map((cat) => {
+                    return <option value={cat}>{cat}</option>
+                    console.log("cat: ", cat)
+                })}
+            </select>
+            <label>Products Per Page</label>
             <input
                 type="number"
                 min="1"
@@ -108,53 +115,56 @@ const ProductPage = ({
 };
 
 const DisplayProduct = ({ product, currentCart, setCurrentCart }) => {
-  return (
-    <div className="single-product">
-      {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
-      <img
-        id="image"
-        alt="some noms"
-        src={product.image}
-        title="source: imgur.com"
-      />
-      <p>
-        <span>
-          <strong> Title: </strong>
-          <br />
-        </span>
-        {product.title}
-      </p>
-      <p>
-        <span>
-          <strong>Category: </strong> <br />
-        </span>
-        {product.category}
-      </p>
-      <p>
-        <span>
-          <strong>Price: </strong> <br />
-        </span>
-        {product.price}
-      </p>
-      <p>
-        <span>
-          <strong>Description </strong> <br />
-        </span>
-        {product.description}
-      </p>
-      <p>
-        <span>
-          <strong>ID: </strong> <br />
-        </span>
-        {product.productId}
-      </p>
-      <button
-        id="addToCart"
-        type="submit"
-        onClick={() => {
-          console.log("current cart", currentCart);
-          const updatedCart = [...currentCart];
-          //check for existing product in cart to set quantity
+
+    return (
+        <div className="single-product">
+            {/* <img referrerPolicy="no-referrer" src={product.image} /> */}
+            <img
+                id="image"
+                alt="some noms"
+                src={product.image}
+                title="source: imgur.com"
+            />
+
+            <p>
+                <span>
+                    <strong> Title: </strong>
+                    <br />
+                </span>
+                {product.title}
+            </p>
+            <p>
+                <span>
+                    <strong>Category: </strong> <br />
+                </span>
+                {product.category}
+            </p>
+            <p>
+                <span>
+                    <strong>Price: </strong> <br />
+                </span>
+                ${product.price}.00
+            </p>
+            <p>
+                <span>
+                    <strong>Description </strong> <br />
+                </span>
+                {product.description}
+            </p>
+            {/* <p>
+                <span>
+                    <strong>ID: </strong> <br />
+                </span>
+                {product.productId}
+            </p> */}
+            <button
+                id="addToCart"
+                type="submit"
+                onClick={() => {
+                    console.log("current cart", currentCart);
+                    const updatedCart = [...currentCart];
+                    //check for existing product in cart to set quantity
+  
 
                     const addToCart = (product) => {
                         console.log("product ", product);
