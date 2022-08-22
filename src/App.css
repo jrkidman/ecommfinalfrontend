@@ -53,7 +53,7 @@
 }
 
 .navbar ul {
-  background-color: grey;
+  background-color: #80808078;
 }
 
 .navbar li {
@@ -83,4 +83,15 @@
 #cart-image {
   height: 122px;
   width: 122px;
+}
+
+#home-page {
+  background-image: url("https://i.imgur.com/br28IG6.jpg");
+  background-size: contain;
+  height: auto;
+  width: auto;
+  /* margin-top: "0px"; */
+  /* font-size: "50px"; */
+  /* background-size: "cover"; */
+  /* background-repeat: "no-repeat"; */
 }

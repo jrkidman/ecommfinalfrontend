@@ -31,22 +31,23 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
       <div className="cart-page">
          <h1>Your Cart</h1>
          {/* display: image, title, quantity/remove item, price per item/Price
+
           display:                    total items          total price
           display: checkout button */}
 
-         <div>
-            {currentCart.map((product) => {
-               return (
-                  <DisplayCartProduct
-                     currentCart={currentCart}
-                     setCurrentCart={setCurrentCart}
-                     product={product}
-                     key={product.productID}
-                  />
-               );
-            })}
-         </div>
-         {/* Button for Checkout
+      <div>
+        {currentCart.map((product) => {
+          return (
+            <DisplayCartProduct
+              currentCart={currentCart}
+              setCurrentCart={setCurrentCart}
+              product={product}
+              key={product.productID}
+            />
+          );
+        })}
+      </div>
+      {/* Button for Checkout
          HTTP POST: 
             In header send:
                token: userToken
@@ -54,6 +55,7 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
                currentCart
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
+
          <p>
             <span>Total Price: {totalPrice}</span>
          </p>
@@ -71,66 +73,67 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
       </div>
    );
 
+
 };
 
 const cartCheckout = async (cart, userToken) => {
-   const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`;
-   const response = await fetch(url, {
-      method: "POST",
-      headers: {
-         "Content-Type": "application/json",
-         token: userToken,
-      },
-      body: JSON.stringify({ cart }),
-   });
-   const responseJSON = await response.json();
-   return responseJSON;
+  const url = `${process.env.REACT_APP_URL_ENDPOINT}/cart/checkout-cart`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: userToken,
+    },
+    body: JSON.stringify({ cart }),
+  });
+  const responseJSON = await response.json();
+  return responseJSON;
 };
 
 const DisplayCartProduct = ({ product, currentCart, setCurrentCart }) => {
-   return (
-      <div className="single-cart-product">
-         <img id="cart-image" src={product.image} title="source: imgur.com" />
+  return (
+    <div className="single-cart-product">
+      <img id="cart-image" src={product.image} title="source: imgur.com" />
 
-         <p>
-            <span>{product.title}</span>
-         </p>
+      <p>
+        <span>{product.title}</span>
+      </p>
 
-         <p>
-            <span>Quantity: {product.quantity}</span>
-         </p>
+      <p>
+        <span>Quantity: {product.quantity}</span>
+      </p>
 
-         <button
-            id="removeItem"
-            type="submit"
-            onClick={() => {
-               //remove single item from currentCart array here
-               console.log("current cart", currentCart);
-               const updatedCart = [...currentCart];
-               console.log(updatedCart);
-               const removeFromCart = (product) => {
-                  console.log("product ", product);
-                  const checkId = updatedCart.findIndex(
-                     (cartProduct) => cartProduct.productId === product.productId
-                  );
+      <button
+        id="removeItem"
+        type="submit"
+        onClick={() => {
+          //remove single item from currentCart array here
+          console.log("current cart", currentCart);
+          const updatedCart = [...currentCart];
+          console.log(updatedCart);
+          const removeFromCart = (product) => {
+            console.log("product ", product);
+            const checkId = updatedCart.findIndex(
+              (cartProduct) => cartProduct.productId === product.productId
+            );
 
-                  updatedCart.splice(checkId, 1);
-                  console.log("Product removed from cart:", updatedCart);
+            updatedCart.splice(checkId, 1);
+            console.log("Product removed from cart:", updatedCart);
 
-                  setCurrentCart(updatedCart);
-               };
-               removeFromCart(product);
-            }}
-         >
-            Remove Item
-         </button>
+            setCurrentCart(updatedCart);
+          };
+          removeFromCart(product);
+        }}
+      >
+        Remove Item
+      </button>
 
-         <p>
-            <span>Price per item: ${product.price}.00</span>
-         </p>
-         <hr />
-      </div>
-   );
+      <p>
+        <span>Price per item: ${product.price}.00</span>
+      </p>
+      <hr />
+    </div>
+  );
 };
 
 export default Cart;
