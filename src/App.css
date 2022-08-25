@@ -71,8 +71,27 @@
 } */
 
 .products-page {
-  margin-top: 100px;
-  /* temp fix */
+  margin-top: 200px;
+  text-align: center;
+}
+
+.container {
+  /* margin-top: 100px; */
+  display: inline-block;
+  width: 80%;
+  height: 80%;
+  background-color: black;
+  opacity: 0.7;
+}
+
+.cart-page {
+  margin-top: 200px;
+  text-align: center;
+}
+
+.profile-page {
+  margin-top: 200px;
+  text-align: center;
 }
 
 #image {

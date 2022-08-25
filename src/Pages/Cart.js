@@ -3,51 +3,49 @@ import { useAuth } from "../Hooks/Auth";
 import { useNavigate } from "react-router-dom";
 
 const Cart = ({ products, currentCart, setCurrentCart }) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  // console.log("cart ", currentCart)
 
-   const navigate = useNavigate();
-   const { user } = useAuth();
-   // console.log("cart ", currentCart)
+  let totalPrice = 0;
 
-   let totalPrice = 0;
+  if (currentCart.length === 0) {
+    totalPrice = "Your cart is empty.";
+  } else {
+    function amount(item) {
+      return item.quantity * item.price;
+    }
 
-   if (currentCart.length === 0) {
-      totalPrice = "Your cart is empty.";
-   }
-   else {
-      function amount(item) {
-         return item.quantity * item.price;
-      }
+    function sum(prev, next) {
+      return prev + next;
+    }
 
-      function sum(prev, next) {
-         return prev + next;
-      }
+    totalPrice = "$" + currentCart.map(amount).reduce(sum) + ".00";
+    // console.log("totalPrice", totalPrice);
+  }
 
-      totalPrice = "$" + currentCart.map(amount).reduce(sum) + ".00";
-      // console.log("totalPrice", totalPrice);
-   }
-
-
-   return (
-      <div className="cart-page">
-         <h1>Your Cart</h1>
-         {/* display: image, title, quantity/remove item, price per item/Price
+  return (
+    <div className="cart-page">
+      <div className="container">
+        <h1>Your Cart</h1>
+        {/* display: image, title, quantity/remove item, price per item/Price
 
           display:                    total items          total price
           display: checkout button */}
 
-      <div>
-        {currentCart.map((product) => {
-          return (
-            <DisplayCartProduct
-              currentCart={currentCart}
-              setCurrentCart={setCurrentCart}
-              product={product}
-              key={product.productID}
-            />
-          );
-        })}
-      </div>
-      {/* Button for Checkout
+        <div>
+          {currentCart.map((product) => {
+            return (
+              <DisplayCartProduct
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
+                product={product}
+                key={product.productID}
+              />
+            );
+          })}
+        </div>
+        {/* Button for Checkout
          HTTP POST: 
             In header send:
                token: userToken
@@ -56,24 +54,22 @@ const Cart = ({ products, currentCart, setCurrentCart }) => {
          Save products in currentCart to current user in mongo (Optionally: create a new Order in mongo and save the orderId onto the user as their currentOrderId )
          after save success, navigate to checkout page */}
 
-         <p>
-            <span>Total Price: {totalPrice}</span>
-         </p>
-         <button
-            id="checkout-button"
-            type="submit"
-            onClick={async () => {
-               await cartCheckout(currentCart, user);
-               navigate("/profile")
-            }
-            }
-         >
-            Check Out
-         </button>
+        <p>
+          <span>Total Price: {totalPrice}</span>
+        </p>
+        <button
+          id="checkout-button"
+          type="submit"
+          onClick={async () => {
+            await cartCheckout(currentCart, user);
+            navigate("/profile");
+          }}
+        >
+          Check Out
+        </button>
       </div>
-   );
-
-
+    </div>
+  );
 };
 
 const cartCheckout = async (cart, userToken) => {

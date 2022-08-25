@@ -34,15 +34,17 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <h1>Order History</h1>
+      <div className="container">
+        <h1>Order History</h1>
 
-      <br />
+        <br />
 
-      {/* function to map over order history and display separate orders */}
-      <div>
-        {orderHistory.map((order) => {
-          return <DisplayOrderHistory order={order} />;
-        })}
+        {/* function to map over order history and display separate orders */}
+        <div>
+          {orderHistory.map((order) => {
+            return <DisplayOrderHistory order={order} />;
+          })}
+        </div>
       </div>
     </div>
   );
